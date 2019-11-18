@@ -1,0 +1,120 @@
+// sass --no-source-map --watch iav-search-shortcode.scss iav-search-shortcode.css  
+$sc_blue : #005ab9;
+$sc_white: #f0f0f0;
+$sc_red: #f82146;
+$font_dark: #54595f;
+$font_gray: #adadad;
+
+@mixin focus-style {
+    &:focus{        
+        outline-color: $sc_blue;
+    }
+}
+@mixin default-trans {    
+    -webkit-transition: all 0.25s ease-out;
+    -moz-transition: all 0.25s ease-out;
+    -o-transition: all 0.25s ease-out;
+    transition: all 0.25s ease-out;
+}
+
+.iav-search-form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    align-content: flex-start;
+    fieldset{
+        margin:0;
+        background-color: transparent;
+    }
+    legend{
+        padding: 0;
+        margin: 0 auto;
+        background-color: transparent;
+    }
+    
+}
+
+label[for="keyword"] {
+    display: none;
+}
+
+.iav-search-category{
+    input[type=checkbox]{
+        height: 0;
+        width: 0;
+        visibility: hidden;
+        @include focus-style;
+        
+    }    
+    input[type="checkbox"] + label {
+        cursor: pointer;
+        @include default-trans;
+        padding: .35em;
+        border-radius: .25em;
+        &:hover{
+            color: $sc_white;
+            background-color: $sc_blue;
+        }
+    }    
+    input:checked + label {
+        background: $sc_blue;
+        color: $sc_white;
+        @include default-trans;
+    } 
+}
+
+.nav-results-button {
+    @include default-trans;
+    background-color: $sc_red;
+    color:  $sc_white;
+    border-radius: .25em;
+    margin: auto 1em;
+    padding: .25em 1em;
+    &:hover{
+        background-color: $sc_white;
+        color: $sc_red;
+    }
+
+}
+
+.iav-search-results {
+    list-style: none;
+    color: $font_gray;
+    text-align: left;
+    h3{
+        font-size: 1.2em;
+        margin-bottom: 0;
+        margin-top: .5em;
+        a{
+            @include default-trans;
+            color: $font_dark;
+            border-bottom: 1px dotted $font_dark;
+            &:hover{
+                color: $sc_blue;
+            }
+        }
+    }
+    time,span{
+        font-size: .75em;
+    }
+    span.post-category:first-of-type::before{
+        content:(" in category: ");
+    }
+}
+.iav-search-field{
+    width: 100%;
+}
+#search-field {
+    line-height: normal; 
+    min-width: 300px;
+    max-width: 500px;
+    width: 100%;
+    border-style: solid;
+    border-radius: .25em;
+}
+
+a:focus, button:focus, .button.alt:focus, input:focus, textarea:focus, input[type="button"]:focus, input[type="reset"]:focus, input[type="submit"]:focus, input[type="email"]:focus, input[type="tel"]:focus, input[type="url"]:focus, input[type="password"]:focus, input[type="search"]:focus {
+    outline-color: $sc_blue;
+}

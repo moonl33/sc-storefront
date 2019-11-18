@@ -1,0 +1,112 @@
+.iav-search-form {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  align-content: flex-start;
+}
+.iav-search-form fieldset {
+  margin: 0;
+  background-color: transparent;
+}
+.iav-search-form legend {
+  padding: 0;
+  margin: 0 auto;
+  background-color: transparent;
+}
+
+label[for=keyword] {
+  display: none;
+}
+
+.iav-search-category input[type=checkbox] {
+  height: 0;
+  width: 0;
+  visibility: hidden;
+}
+.iav-search-category input[type=checkbox]:focus {
+  outline-color: #005ab9;
+}
+.iav-search-category input[type=checkbox] + label {
+  cursor: pointer;
+  -webkit-transition: all 0.25s ease-out;
+  -moz-transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
+  transition: all 0.25s ease-out;
+  padding: 0.35em;
+  border-radius: 0.25em;
+}
+.iav-search-category input[type=checkbox] + label:hover {
+  color: #f0f0f0;
+  background-color: #005ab9;
+}
+.iav-search-category input:checked + label {
+  background: #005ab9;
+  color: #f0f0f0;
+  -webkit-transition: all 0.25s ease-out;
+  -moz-transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
+  transition: all 0.25s ease-out;
+}
+
+.nav-results-button {
+  -webkit-transition: all 0.25s ease-out;
+  -moz-transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
+  transition: all 0.25s ease-out;
+  background-color: #f82146;
+  color: #f0f0f0;
+  border-radius: 0.25em;
+  margin: auto 1em;
+  padding: 0.25em 1em;
+}
+.nav-results-button:hover {
+  background-color: #f0f0f0;
+  color: #f82146;
+}
+
+.iav-search-results {
+  list-style: none;
+  color: #adadad;
+  text-align: left;
+}
+.iav-search-results h3 {
+  font-size: 1.2em;
+  margin-bottom: 0;
+  margin-top: 0.5em;
+}
+.iav-search-results h3 a {
+  -webkit-transition: all 0.25s ease-out;
+  -moz-transition: all 0.25s ease-out;
+  -o-transition: all 0.25s ease-out;
+  transition: all 0.25s ease-out;
+  color: #54595f;
+  border-bottom: 1px dotted #54595f;
+}
+.iav-search-results h3 a:hover {
+  color: #005ab9;
+}
+.iav-search-results time, .iav-search-results span {
+  font-size: 0.75em;
+}
+.iav-search-results span.post-category:first-of-type::before {
+  content: " in category: ";
+}
+
+.iav-search-field {
+  width: 100%;
+}
+
+#search-field {
+  line-height: normal;
+  min-width: 300px;
+  max-width: 500px;
+  width: 100%;
+  border-style: solid;
+  border-radius: 0.25em;
+}
+
+a:focus, button:focus, .button.alt:focus, input:focus, textarea:focus, input[type=button]:focus, input[type=reset]:focus, input[type=submit]:focus, input[type=email]:focus, input[type=tel]:focus, input[type=url]:focus, input[type=password]:focus, input[type=search]:focus {
+  outline-color: #005ab9;
+}

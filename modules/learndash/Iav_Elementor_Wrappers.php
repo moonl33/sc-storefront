@@ -9,8 +9,8 @@ if ( ! defined( 'WPINC' ) ) {die;} // end if
 
 
 //simple class to add hooks
-if(  ! class_exists( 'IAV_ELEMENTOR_WRAPPERS') ) :
-class IAV_ELEMENTOR_WRAPPERS
+if(  ! class_exists( 'Iav_Elementor_Wrappers') ) :
+class Iav_Elementor_Wrappers
 {
     protected static $instance = NULL;
     
@@ -57,6 +57,6 @@ class IAV_ELEMENTOR_WRAPPERS
        }
 }
 
-new IAV_ELEMENTOR_WRAPPERS();
+new Iav_Elementor_Wrappers();
 
 endif;

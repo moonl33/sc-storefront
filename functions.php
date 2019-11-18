@@ -26,6 +26,10 @@ add_action( 'wp_enqueue_scripts', 'child_theme_configurator_css', 30 );
 define('IAVC_MODS', get_stylesheet_directory() . '/modules/' );
 
 // check for  learndash then add hooks - just check for  any learndash class 
-if ( class_exists( 'LearnDash_Theme_Register' ) && file_exists( IAVC_MODS . 'learndash/elementor-wrappers.php' ) ) :
-    require_once IAVC_MODS . 'learndash/elementor-wrappers.php';
+if ( class_exists( 'LearnDash_Theme_Register' ) && file_exists( IAVC_MODS . 'learndash/Iav_Elementor_Wrappers.php' ) ) :
+    require_once IAVC_MODS . 'learndash/Iav_Elementor_Wrappers.php';
+endif;
+
+if ( file_exists( IAVC_MODS . 'shortcodes/Iav_Shortcodes.php' ) ) :
+    require_once IAVC_MODS . 'shortcodes/Iav_Shortcodes.php';
 endif;
