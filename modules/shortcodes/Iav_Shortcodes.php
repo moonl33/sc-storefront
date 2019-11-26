@@ -18,6 +18,19 @@ if ( ! class_exists( 'Iav_Shortcodes' ) ) :
                                 null,
                                 true
             );
+            //register masonry and images loaded
+            wp_register_script( 'iav-masonry' ,
+                                get_stylesheet_directory_uri() . '/modules/shortcodes/assets/js/masonry.pkgd.min.js',
+                                array( 'jquery' ),
+                                null,
+                                true
+            );
+            wp_register_script( 'iav-imagesloaded' ,
+                                get_stylesheet_directory_uri() . '/modules/shortcodes/assets/js/imagesloaded.pkgd.min.js',
+                                array( 'jquery' ),
+                                null,
+                                true
+            );
             //register loading overlay style
             wp_register_style( 'iav-loading-overlay' ,
                                 get_stylesheet_directory_uri() . '/modules/shortcodes/assets/css/iavloader.css'
@@ -54,6 +67,8 @@ if ( ! class_exists( 'Iav_Shortcodes' ) ) :
             wp_enqueue_style( 'iav-loading-overlay' );
             wp_enqueue_style( 'iav-font-awesome' );
             wp_enqueue_style( 'iav-search-shortcode' );
+            
+           
             //enqueue ajax js
             wp_enqueue_script( 'iav-ajax-search' );
             $atts = shortcode_atts(
@@ -153,30 +168,38 @@ if ( ! class_exists( 'Iav_Shortcodes' ) ) :
             // The Loop
             //if ( $query->have_posts() ) {
             if ( have_posts() ) {
-                echo '<ul class="iav-search-results">';
+                echo '<ul class="iav-search-results grid">';
                 while ( have_posts() ) {
                     the_post();
                     ob_start();
                     ?>
-                    <li class="iav-result-row">
-                        <article>
+                    <li class="iav-result-row grid-item">
+                        <!-- <article> -->
                             <?php
                             if (  get_the_post_thumbnail_url( get_the_ID() , 'full' ) ) {
                             ?>
-                            <a href="<?php echo get_the_permalink(); ?>" rel="nofollow" >
-                            <?php the_post_thumbnail('medium'); ?>
-                            </a>
+                            <div>
+                                <a href="<?php echo get_the_permalink(); ?>" rel="nofollow" >
+                                <?php the_post_thumbnail('large'); ?>
+                                </a>
+                            </div>
                             <?php
                             } else {
                             ?>
-                            <a href="<?php echo get_the_permalink(); ?>" rel="nofollow" >
-                                <img src="<?php echo $img_placeholder; ?>" alt="">
-                            </a>
+                            <div>
+                                <a href="<?php echo get_the_permalink(); ?>" rel="nofollow" >
+                                    <img src="<?php echo $img_placeholder; ?>" alt="">
+                                </a>
+                            </div>
                             <?php
                             }
                             ?>
-                            <h3><a href="<?php echo get_the_permalink(); ?>"><?php echo get_the_title();?></a></h3>
-                            <time><?php echo get_the_date(); ?></time>
+                            <div>
+                                <h3><a href="<?php echo get_the_permalink(); ?>"><?php echo get_the_title();?></a></h3>
+                            </div>
+                            <div class="time-holder">
+                                <time><?php echo get_the_date(); ?></time>
+                            </div>
                             <?php
                             $cat_list = get_the_category();
                             //if(  ! empty( $cat_list ) ) :
@@ -188,7 +211,7 @@ if ( ! class_exists( 'Iav_Shortcodes' ) ) :
                                 }
                             endif;
                             ?>
-                        </article>
+                        <!-- </article> -->
                     </li>
                     <?php
                     echo ob_get_clean();

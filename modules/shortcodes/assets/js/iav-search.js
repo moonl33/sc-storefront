@@ -52,4 +52,7 @@
         $( 'form.iav-search-form' ).trigger( 'submit' ); 
     });
 
+    // masonry 
+   
+
 })( jQuery );

@@ -128,20 +128,35 @@ label[for="keyword"] {
     color: $font_gray;
     text-align: left;
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: flex-start;
+
     width: 100%;
     margin-left: 0;
     .iav-result-row {
         @include default-trans;
-        width: 31%;
+        //width: 31%;
         margin: 1%;
         padding-bottom: 0.5em;
         -webkit-box-shadow: 0 0 10px 0 rgba(0,0,0,0.15);
         -moz-box-shadow: 0 0 10px 0 rgba(0,0,0,0.15);
         box-shadow: 0 0 10px 0 rgba(0,0,0,0.15);
+
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: stretch;
+        align-content: stretch;
         
         img{
             width: 100%;
+            object-fit: cover;
+            height: 300px;
+            margin-bottom: 0;
         }
         //hover styles to pop
         &:hover{
@@ -149,12 +164,15 @@ label[for="keyword"] {
             -moz-box-shadow: 0 0 30px 0 rgba(0,0,0,0.15);
             box-shadow: 0 0 30px 0 rgba(0,0,0,0.15);
         }
+        
     }
     h3{
         font-size: 0.8em;
         margin-bottom: 0;
         margin-top: .5em;
-        padding: 0 5px;
+        margin-bottom: .5em;
+        padding: 0 8px;
+        padding-bottom: 9px;
         a{
             @include default-trans;
             color: $sc_blue;
@@ -166,7 +184,11 @@ label[for="keyword"] {
     }
     time,span{
         font-size: .75em;
-        padding: 0 5px;
+        padding: 0 8px;
+        padding-top: 9px;
+        display: block;        
+        border-top: solid 1px #54595f0a;
+        margin-top: auto;
     }
     span.post-category:first-of-type::before{
         content:(" in category: ");
@@ -234,3 +256,39 @@ span.page-numbers.dots{
 a:focus, button:focus, .button.alt:focus, input:focus, textarea:focus, input[type="button"]:focus, input[type="reset"]:focus, input[type="submit"]:focus, input[type="email"]:focus, input[type="tel"]:focus, input[type="url"]:focus, input[type="password"]:focus, input[type="search"]:focus {
     outline-color: transparent;
 }
+.time-holder{
+    margin-top: auto;
+}
+//masonry styles
+.iav-search-results.grid{
+    max-width: 1200px; 
+}
+.iav-search-results.grid:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+
+/* fluid 5 columns */
+
+.iav-result-row.grid-item{
+    /* display:inline;    
+    box-sizing: border-box; */
+    width: 30%; 
+}
+/* Step 4: Add media queries (subjective) to make the whole grid resposive. */
+
+@media (max-width: 600px) {
+    .grid-sizer,
+    .iav-result-row.grid-item { 
+    width: 48%; 
+    }
+  }
+  
+  @media (min-width: 1000px) {
+    .grid-sizer,
+    .iav-result-row.grid-item { 
+        width: 30%; 
+    }
+  }
