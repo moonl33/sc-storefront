@@ -25,25 +25,31 @@
                 // This outputs the result of the ajax request
                     $( '.iav-search-results-wrapper' ).html( data );
                     //console.log( "done ajax" );
-                    $( 'form.iav-search-form' ).parent().removeClass("iavloading");
+                    $( 'form.iav-search-form' ).parent().removeClass( "iavloading" );
             },
             error: function(errorThrown){
                     // console.log(errorThrown);
-                    $( 'form.iav-search-form' ).parent().removeClass("iavloading");
+                    $( 'form.iav-search-form' ).parent().removeClass( "iavloading" );
             }
         });
     });
     // submit search on change
     $( 'body' ).on( 'change', '.iav-search-category input[type="checkbox"]', function( event ) {
         event.preventDefault();
-        //console.log( $( '.inside-form-button' ) );
-        $('input[name="paged"]').val("1");
+        $( 'input[name="paged"]' ).val( "1" );
         $( 'form.iav-search-form' ).trigger( 'submit' ); 
     });
     //for navigation 
     $( 'body' ).on( 'click', '.nav-results-button', function( event ) {
         event.preventDefault();
-        $('input[name="paged"]').val( $(this).data('page') );
-        $('#'+$(this).attr('for')).trigger('submit');
+        $( 'input[name="paged"]' ).val( $(this).data( 'page' ) );
+        $( '#'+$( this ).attr( 'for' ) ).trigger( 'submit' );
     });
+    $( 'body' ).on( 'click', '.iav-pagination a', function( event ) {
+        event.preventDefault();
+        console.log( $(this).text() );
+        $('input[name="paged"]').val( $(this).text() );
+        $( 'form.iav-search-form' ).trigger( 'submit' ); 
+    });
+
 })( jQuery );

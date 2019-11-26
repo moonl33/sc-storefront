@@ -33,3 +33,8 @@ endif;
 if ( file_exists( IAVC_MODS . 'shortcodes/Iav_Shortcodes.php' ) ) :
     require_once IAVC_MODS . 'shortcodes/Iav_Shortcodes.php';
 endif;
+
+// register custom post type for' Research Posts'
+if ( file_exists( IAVC_MODS . 'post_types/research_post_type.php' ) ) :
+    require_once  IAVC_MODS . 'post_types/research_post_type.php';
+endif;
