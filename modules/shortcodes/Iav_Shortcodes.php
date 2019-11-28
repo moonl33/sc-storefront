@@ -48,7 +48,7 @@ if ( ! class_exists( 'Iav_Shortcodes' ) ) :
             add_action( 'wp_ajax_search_for_results' , array( $this, 'search_for_results' ) );
             
         }
-        
+        // remove url for if 
         public static function get_instance() {
 
             // create an object
@@ -64,8 +64,8 @@ if ( ! class_exists( 'Iav_Shortcodes' ) ) :
            MUST INCLUDE THIS DIV SOMEWHERE ON PAGE TO INCLUDE RESULTS
            <div id="<?php echo 'resultsid-' . $atts['form_id']; ?>" class="iav-search-results-wrapper">
         */
+        
         public function iav_search_shortcode( $atts ) {
-
             //enqueue loading overlay
             wp_enqueue_style( 'iav-loading-overlay' );
             wp_enqueue_style( 'iav-font-awesome' );
@@ -93,7 +93,9 @@ if ( ! class_exists( 'Iav_Shortcodes' ) ) :
                                     'category' => $atts['force_category_slug'],
                                 )
             );
-
+            
+            $initial_keyword = ( $_REQUEST["keyword"] ) ? sanitize_text_field( $_REQUEST["keyword"] ) : "";
+            $initial_page = ( $_REQUEST["paged"] && is_numeric( $_REQUEST["paged"] ) ) ? $_REQUEST["paged"] : "1";
             //output
             $nonce = wp_create_nonce( 'search_' . get_the_ID() );
             ob_start();
@@ -109,8 +111,10 @@ if ( ! class_exists( 'Iav_Shortcodes' ) ) :
                             // category name is passed on shortcode but we need category slug for the id
                             foreach ( $cat_array as $cat_filter ) {
                                 $slug = get_term_by( "name", $cat_filter, "category" );
+                                
                                 if ( $slug ) : 
-                                    echo '<input type="checkbox" name="category[]" value="' . $slug->slug  . '" id="cat-' . $slug->slug . '"><label class="cat-' . $slug->slug . '" for="cat-' . $slug->slug . '"><span>' . $cat_filter . '</span></label>';
+                                    $checked_category = ( $_REQUEST["category"] &&  $_REQUEST["category"] == $slug->slug ) ? "checked" : "";
+                                    echo '<input type="checkbox" name="category" value="' . $slug->slug  . '" id="cat-' . $slug->slug . '" ' .$checked_category. '><label class="cat-' . $slug->slug . '" for="cat-' . $slug->slug . '"><span>' . $cat_filter . '</span></label>';
                                 endif;
                             }
                             echo '</fieldset>';
@@ -120,11 +124,11 @@ if ( ! class_exists( 'Iav_Shortcodes' ) ) :
                     <fieldset>
                         <legend><?php _e('Enter Keyword'); ?></legend>
                         <label for="keyword"><?php _e( 'Search' ); ?> </label>
-                        <input type="text" name="keyword" id="search-field" value="" placeholder="START SEARCH HERE" data-swplive="true">
+                        <input type="text" name="keyword" id="search-field" value="<?php echo $initial_keyword; ?>" placeholder="START SEARCH HERE" data-swplive="true">
                         <button class="nav-results-button inside-form-button" data-page="1" type="submit" for="<?php echo 'formid-' . $atts['form_id']; ?>" ><?php _e( 'Search' ); ?></button>
                     </fieldset>
                 </div>
-                <input type="hidden" value="1" name="paged">
+                <input type="hidden" value="<?php echo $initial_page ?>" name="paged">
             </form>
             </div>            
             <?php
@@ -155,15 +159,19 @@ if ( ! class_exists( 'Iav_Shortcodes' ) ) :
             if ( isset( $_POST['post_type'] ) && "" !== $_POST['post_type'] ) :
                 $args['post_type'][] = sanitize_text_field( $_POST['post_type'] );
             endif;
-            if ( isset( $_POST['category'] ) && !empty($_POST['category']) ):
+            /* if ( isset( $_POST['category'] ) && !empty($_POST['category']) ):
                 $category = implode( '+' , $_POST['category'] );
+            endif;  */
+            if ( isset( $_POST['category'] ) && "" !== $_POST['category'] ):
+                $category = sanitize_text_field(  $_POST['category'] );
             endif; 
+            //force_cat is useless for now due to client changes request
             if ( isset( $_POST['force_cat'] ) && "" != $_POST['force_cat'] ):
                 $category = ($category == "" ) ? $_POST['force_cat'] : $_POST['force_cat'] . "+" . $category;
             endif;
-            if ( "" != $category ) :
+            /* if ( "" != $category ) :
                      $args["category_name"] = sanitize_text_field($category);
-            endif;
+            endif; */
             // The Query
             //$query = new WP_Query( $args ); // use query_posts because WP_Query will ignore pagination
             query_posts ($args);

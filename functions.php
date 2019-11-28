@@ -38,3 +38,11 @@ endif;
 if ( file_exists( IAVC_MODS . 'post_types/research_post_type.php' ) ) :
     require_once  IAVC_MODS . 'post_types/research_post_type.php';
 endif;
+
+// dirty trick to disable rewrite if on search shortcode
+// https://wordpress.stackexchange.com/questions/66273/disable-wordpress-pagination-url-rewrite-for-specific-page
+/* function wpa66273_disable_canonical_redirect( $query ) {
+if( $_REQUEST["paged"] && $_REQUEST["keyword"] && $_REQUEST["category"] )
+        remove_filter( 'template_redirect', 'redirect_canonical' ); 
+}
+add_action( 'parse_query', 'wpa66273_disable_canonical_redirect' ); */
