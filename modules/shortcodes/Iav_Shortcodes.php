@@ -95,7 +95,7 @@ if ( ! class_exists( 'Iav_Shortcodes' ) ) :
             );
             
             $initial_keyword = ( $_REQUEST["keyword"] ) ? sanitize_text_field( $_REQUEST["keyword"] ) : "";
-            $initial_page = ( $_REQUEST["paged"] && is_numeric( $_REQUEST["paged"] ) ) ? $_REQUEST["paged"] : "1";
+            $initial_page = ( $_REQUEST["paged"] && is_numeric( $_REQUEST["paged"] ) ) ? $_REQUEST["paged"] : get_query_var('paged');
             //output
             $nonce = wp_create_nonce( 'search_' . get_the_ID() );
             ob_start();
@@ -145,8 +145,8 @@ if ( ! class_exists( 'Iav_Shortcodes' ) ) :
             endif;
 
             // WP_Query arguments
-            //$paged = (get_query_var('paged')) ? get_query_var('paged') : 3;
-            $paged = ( isset($_POST['paged']) ) ? sanitize_text_field( $_POST['paged'] ) : 1 ;
+            $query_paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+            $paged = ( isset($_POST['paged']) ) ? sanitize_text_field( $_POST['paged'] ) : $query_paged ;
             $args = array(
                 'posts_per_page' => 12,
                 's'                      => '',
@@ -169,9 +169,9 @@ if ( ! class_exists( 'Iav_Shortcodes' ) ) :
             if ( isset( $_POST['force_cat'] ) && "" != $_POST['force_cat'] ):
                 $category = ($category == "" ) ? $_POST['force_cat'] : $_POST['force_cat'] . "+" . $category;
             endif;
-            /* if ( "" != $category ) :
+            if ( "" != $category ) :
                      $args["category_name"] = sanitize_text_field($category);
-            endif; */
+            endif;
             // The Query
             //$query = new WP_Query( $args ); // use query_posts because WP_Query will ignore pagination
             query_posts ($args);
@@ -246,8 +246,7 @@ if ( ! class_exists( 'Iav_Shortcodes' ) ) :
         }
         
 
-    }
-    
+    }    
     
     new Iav_Shortcodes();
 
