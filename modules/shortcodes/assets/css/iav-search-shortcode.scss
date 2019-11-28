@@ -18,15 +18,11 @@ $font_gray: #adadad;
 }
 
 .iav-search-form {
-    /* display: inline-flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
-    align-content: stretch; */
     fieldset{
         margin:0;
         background-color: transparent;
+        //padding: 1.1em 0 0;
+        padding: 0;
     }
     legend{
         display: none;
@@ -34,9 +30,11 @@ $font_gray: #adadad;
         margin: 0 auto;
         background-color: transparent;
     }
-    
+    .iav-search-field > fieldset{
+        padding-top:0;
+    }
 }
-
+ 
 label[for="keyword"] {
     display: none;
 }
@@ -44,14 +42,6 @@ label[for="keyword"] {
 .iav-search-category{
     display: inline-block;
 
-    fieldset{
-        /* display: inline-flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: center;
-        align-items: center;
-        align-content: center; */
-    }
     input[type=checkbox]{
         height: 0;
         width: 0;
@@ -63,25 +53,23 @@ label[for="keyword"] {
     input[type="checkbox"] + label {
         cursor: pointer;
         @include default-trans;
-        border-radius: 50%;
         text-align: center;
-        width: 2em;
-        height: 2em;
-        font-size: 1em;
+        font-size: 2em;
         line-height: 2em;
-        color: $sc_blue;
-        border: 2px solid $sc_blue; 
+        color: $sc_white;
         padding: 2px 7px;
         padding-top: 5px;
-        &:hover{
-            color: $sc_white;
-            background-color: $sc_blue;
-        }
+        display: inline-flex;
+        flex-direction: column;      
+        justify-content: center;
+        align-items: center; 
     }    
     input:checked + label {
-        background: $sc_blue;
-        color: $sc_white;
         @include default-trans;
+    }
+    input:checked + label:before{
+        color: $sc_blue;
+        background-color: $sc_white;
     }
     // styles for font-awesome
     label::before {
@@ -91,16 +79,40 @@ label[for="keyword"] {
         font-variant: normal;
         text-rendering: auto;
         -webkit-font-smoothing: antialiased;
-        font-weight: 900;
-    } 
+        font-weight: 900;        
+        border: 2px solid $sc_white;         
+        border-radius: 50%;
+        width: 2em;
+        height: 2em;
+    }
+    label::after{
+        font-size: .5em;
+    }
+    label:hover:before{
+        color: $sc_blue;
+        background-color: $sc_white;
+    }
+    label:hover:after{
+        color: $sc_white;
+        background-color: transparent;
+    }
     .cat-article::before {
         content: "\f15c";
+    }
+    .cat-article::after {
+        content: "Articles";
     }
     .cat-podcast::before {
         content: "\f2ce";
     }
+    .cat-podcast::after {
+        content: "Podcasts";
+    }
     .cat-webcast::before {
         content: "\f144";
+    }
+    .cat-webcast::after {
+        content: "Webinars";
     }
     //hide actual label and just show icon
     label span{

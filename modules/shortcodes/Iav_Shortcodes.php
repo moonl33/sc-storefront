@@ -60,6 +60,9 @@ if ( ! class_exists( 'Iav_Shortcodes' ) ) :
        /*  shortcode [iav_search type="research" category="cat1,cat2,cat3"]
            data-swplive="true" is used for wpsearch live ajax
            will only work searching for one type of 'post_type'
+
+           MUST INCLUDE THIS DIV SOMEWHERE ON PAGE TO INCLUDE RESULTS
+           <div id="<?php echo 'resultsid-' . $atts['form_id']; ?>" class="iav-search-results-wrapper">
         */
         public function iav_search_shortcode( $atts ) {
 
@@ -97,33 +100,32 @@ if ( ! class_exists( 'Iav_Shortcodes' ) ) :
             ?>
             <form id="<?php echo 'formid-' . $atts['form_id']; ?>" data-formid="<?php echo $atts['form_id']; ?>" data-searchid= "<?php echo get_the_ID(); ?>" class="iav-search-form" action="" method="post" target="_self" enctype="multipart/form-data" data-nonce="<?php echo $nonce; ?>">
                 <div class="iav-search-field">
+                    <div class="iav-search-category">
+                        <?php
+                        $cat_array = explode( ',' , $atts['category_filters'] );
+                        if ( ! empty( $cat_array ) ) :
+                            echo '<fieldset>';
+                            echo '<legend>'. _( 'Narrow Your Search' ) . '</legend>';
+                            // category name is passed on shortcode but we need category slug for the id
+                            foreach ( $cat_array as $cat_filter ) {
+                                $slug = get_term_by( "name", $cat_filter, "category" );
+                                if ( $slug ) : 
+                                    echo '<input type="checkbox" name="category[]" value="' . $slug->slug  . '" id="cat-' . $slug->slug . '"><label class="cat-' . $slug->slug . '" for="cat-' . $slug->slug . '"><span>' . $cat_filter . '</span></label>';
+                                endif;
+                            }
+                            echo '</fieldset>';
+                        endif;
+                        ?>
+                    </div>
                     <fieldset>
                         <legend><?php _e('Enter Keyword'); ?></legend>
                         <label for="keyword"><?php _e( 'Search' ); ?> </label>
                         <input type="text" name="keyword" id="search-field" value="" placeholder="START SEARCH HERE" data-swplive="true">
                         <button class="nav-results-button inside-form-button" data-page="1" type="submit" for="<?php echo 'formid-' . $atts['form_id']; ?>" ><?php _e( 'Search' ); ?></button>
-                        <div class="iav-search-category">
-                            <?php
-                            $cat_array = explode( ',' , $atts['category_filters'] );
-                            if ( ! empty( $cat_array ) ) :
-                                echo '<fieldset>';
-                                echo '<legend>'. _( 'Narrow Your Search' ) . '</legend>';
-                                // category name is passed on shortcode but we need category slug for the id
-                                foreach ( $cat_array as $cat_filter ) {
-                                    $slug = get_term_by( "name", $cat_filter, "category" );
-                                    if ( $slug ) : 
-                                        echo '<input type="checkbox" name="category[]" value="' . $slug->slug  . '" id="cat-' . $slug->slug . '"><label class="cat-' . $slug->slug . '" for="cat-' . $slug->slug . '"><span>' . $cat_filter . '</span></label>';
-                                    endif;
-                                }
-                                echo '</fieldset>';
-                            endif;
-                            ?>
-                        </div>
                     </fieldset>
                 </div>
                 <input type="hidden" value="1" name="paged">
             </form>
-            <div id="<?php echo 'resultsid-' . $atts['form_id']; ?>" class="iav-search-results-wrapper">
             </div>            
             <?php
             return ob_get_clean();

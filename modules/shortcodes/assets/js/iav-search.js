@@ -5,6 +5,12 @@
     });
 
     $( 'form.iav-search-form' ).on( 'submit', function( event ) {
+        var data_url = "?"+$( this ).serialize();
+        //var current_page = $('html').html();
+        //history.replaceState(current_page, document.title, data_url); //maybe change URL title?
+        history.replaceState(null, null, data_url); //maybe change URL title?
+        //history.pushState( null, null, data_url);
+        
         event.preventDefault(); //change behaviour
         $( 'form.iav-search-form' ).parent().addClass("iavloading");
         var form_data = new FormData( this );
@@ -32,10 +38,19 @@
                     $( 'form.iav-search-form' ).parent().removeClass( "iavloading" );
             }
         });
+        // should we???
+        event.stopPropagation();
     });
-    // submit search on change
+    // submit search on change and make checkbox behave like radio
     $( 'body' ).on( 'change', '.iav-search-category input[type="checkbox"]', function( event ) {
         event.preventDefault();
+        var initial_state = $(this).prop('checked');
+        $('.iav-search-category input[type="checkbox"]').each(function(){
+            $(this).prop('checked', false);
+        });
+        if( initial_state ){
+            $(this).prop('checked', true);
+        }
         $( 'input[name="paged"]' ).val( "1" );
         $( 'form.iav-search-form' ).trigger( 'submit' ); 
     });
@@ -47,12 +62,8 @@
     });
     $( 'body' ).on( 'click', '.iav-pagination a', function( event ) {
         event.preventDefault();
-        console.log( $(this).text() );
         $('input[name="paged"]').val( $(this).text() );
         $( 'form.iav-search-form' ).trigger( 'submit' ); 
     });
-
-    // masonry 
-   
 
 })( jQuery );
