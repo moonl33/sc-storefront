@@ -1,4 +1,9 @@
 @charset "UTF-8";
+.iav-search-results-wrapper .notice {
+  display: block;
+  padding: 3em;
+}
+
 .iav-search-form fieldset {
   margin: 0;
   background-color: transparent;

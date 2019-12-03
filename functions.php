@@ -46,3 +46,13 @@ if( $_REQUEST["paged"] && $_REQUEST["keyword"] )
         remove_filter( 'template_redirect', 'redirect_canonical' ); 
 }
 add_action( 'parse_query', 'wpa66273_disable_canonical_redirect' );
+function iav_check_back_button(){
+    if( isset($_SERVER['HTTP_REFERER']) ) {
+        $url_components = parse_url( $_SERVER['HTTP_REFERER'] ); 
+        parse_str($url_components['query'], $params);
+        if( isset( $params['keyword'] ) &&  isset( $params['paged'] )) {        
+            wp_enqueue_script ( 'iav-back-to-research',  get_stylesheet_directory_uri() . '/modules/iav-back-button.js', array( 'jquery' ), null, true );
+        }
+    }
+}
+add_action( 'init' , 'iav_check_back_button');

@@ -16,7 +16,12 @@ $font_gray: #adadad;
     -o-transition: all 0.25s ease-out;
     transition: all 0.25s ease-out;
 }
-
+.iav-search-results-wrapper{
+    .notice{
+        display:block;
+        padding: 3em;
+    }
+}
 .iav-search-form {
     fieldset{
         margin:0;
