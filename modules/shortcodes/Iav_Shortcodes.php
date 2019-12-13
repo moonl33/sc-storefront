@@ -151,6 +151,8 @@ if ( ! class_exists( 'Iav_Shortcodes' ) ) :
                 'posts_per_page' => 12,
                 's'                      => '',
                 'paged' => $paged ,
+                'order' => 'DESC',
+                'orderby' => 'date',
             );
             $category = ""; //empty string for category
             if ( isset( $_POST['keyword'] ) && "" !== $_POST['keyword'] ) :

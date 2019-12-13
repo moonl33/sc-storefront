@@ -90,7 +90,7 @@ label[for=keyword] {
   content: "";
 }
 .iav-search-category .cat-article::after {
-  content: "Articles";
+  content: "Reports";
 }
 .iav-search-category .cat-podcast::before {
   content: "";
@@ -206,9 +206,6 @@ label[for=keyword] {
 
 #search-field {
   line-height: normal;
-  /* min-width: 300px;
-  max-width: 500px;
-  width: 100%; */
   width: 45%;
   border-style: solid;
   border-radius: 0.25em;
@@ -279,7 +276,7 @@ a:focus, button:focus, .button.alt:focus, input:focus, textarea:focus, input[typ
 .iav-result-row.grid-item {
   /* display:inline;    
   box-sizing: border-box; */
-  width: 30%;
+  width: 23%;
 }
 
 /* Step 4: Add media queries (subjective) to make the whole grid resposive. */
@@ -292,6 +289,6 @@ a:focus, button:focus, .button.alt:focus, input:focus, textarea:focus, input[typ
 @media (min-width: 1000px) {
   .grid-sizer,
 .iav-result-row.grid-item {
-    width: 30%;
+    width: 23%;
   }
 }
