@@ -85,14 +85,16 @@ $has_lesson_quizzes = learndash_30_has_lesson_quizzes( $course_id, $lessons ); ?
      * Course info bar
      *
      */
-    learndash_get_template_part( 'modules/infobar.php', array(
+    /* learndash_get_template_part( 'modules/infobar.php', array(
             'context'       => 'course',
             'course_id'     => $course_id,
             'user_id'       => $user_id,
             'has_access'    => $has_access,
             'course_status' => $course_status,
             'post'          => $post
-        ), true ); ?>
+        ), true );  */
+        
+    ?>
 
     <?php
     /**
