@@ -157,6 +157,22 @@ if ( ! class_exists( 'Iav_Shortcodes' ) ) :
             $category = ""; //empty string for category
             if ( isset( $_POST['keyword'] ) && "" !== $_POST['keyword'] ) :
                 $args['s'] = sanitize_text_field( $_POST['keyword'] );
+                /* $args['tax_query'] = array(
+                    'relation' => 'OR',
+                    array(
+                        'taxonomy'         => 'post_tag',
+                        'terms'            => sanitize_text_field( $_POST['keyword'] ),
+                        'field'            => 'name',
+                        'include_children' => false,
+                    ),
+                    array(
+                        'taxonomy'         => 'post_tag',
+                        'terms'            => sanitize_text_field( $_POST['keyword'] ),
+                        'field'            => 'name',
+                        'operator'         => 'NOT IN',
+                        'include_children' => false,
+                    ),
+                ); */
             endif;
             if ( isset( $_POST['post_type'] ) && "" !== $_POST['post_type'] ) :
                 $args['post_type'][] = sanitize_text_field( $_POST['post_type'] );
@@ -176,6 +192,9 @@ if ( ! class_exists( 'Iav_Shortcodes' ) ) :
             endif;
             // The Query
             //$query = new WP_Query( $args ); // use query_posts because WP_Query will ignore pagination
+
+            add_filter( 'posts_search', array($this, 'sc_research_filter'), 500, 2 );
+
             query_posts ($args);
             // The Loop
             //if ( $query->have_posts() ) {
@@ -246,6 +265,156 @@ if ( ! class_exists( 'Iav_Shortcodes' ) ) :
             wp_reset_postdata();
             wp_die();
         }
+
+        //include tags when searching  - taken from wp-extended-search
+        function sc_research_filter( $search, $wp_query ) {
+            global $wpdb;
+            
+            if ( empty( $search ) || !empty($wp_query->query_vars['suppress_filters']) ) {
+                return $search; // skip processing - If no search term in query or suppress_filters is true
+            }
+            
+            $q = $wp_query->query_vars;
+            $n = !empty($q['exact']) ? '' : '%';
+            $search = $searchand = '';
+            
+            
+            //$terms_relation_type = apply_filters('wp_es_terms_relation_type', NULL);
+            /* 
+            if (!in_array($terms_relation_type, array('AND', 'OR'), TRUE)) {
+                $terms_relation_type = (intval($this->WP_ES_settings['terms_relation']) === 2) ? 'OR' : 'AND';
+            }
+             */
+            foreach ((array)$q['search_terms'] as $term ) {
+                
+                $term = $n . $wpdb->esc_like( $term ) . $n;
+
+                /* change query as per plugin settings */
+                $OR = '';
+                //if (!empty($this->WP_ES_settings)) {
+                if ( true ) {
+                    $search .= "{$searchand} (";
+                    
+                    // if post title search is enabled
+                    //if (!empty($this->WP_ES_settings['title'])) {
+                    if ( true ) {
+                        $search .= $wpdb->prepare("($wpdb->posts.post_title LIKE '%s')", $term);
+                        $OR = ' OR ';
+                    }
+                    
+                    //if content search is enabled
+                    //if (!empty($this->WP_ES_settings['content'])) {
+                    if ( true ) {
+                        $search .= $OR;
+                        $search .= $wpdb->prepare("($wpdb->posts.post_content LIKE '%s')", $term);
+                        $OR = ' OR ';
+                    }
+                    
+                    //if excerpt search is enabled
+                    //if (!empty($this->WP_ES_settings['excerpt'])) {
+                    if ( true ) {
+                        $search .= $OR;
+                        $search .= $wpdb->prepare("($wpdb->posts.post_excerpt LIKE '%s')", $term);
+                        $OR = ' OR ';
+                    }
+
+                    // if post meta search is enabled
+                    //if (!empty($this->WP_ES_settings['meta_keys'])) {
+                    if ( false ) {
+                        $meta_key_OR = '';
+
+                        foreach ($this->WP_ES_settings['meta_keys'] as $key_slug) {
+                            $search .= $OR;
+                            $search .= $wpdb->prepare("$meta_key_OR (espm.meta_key = '%s' AND espm.meta_value LIKE '%s')", $key_slug, $term);
+                            $OR = '';
+                            $meta_key_OR = ' OR ';
+                        }
+                        
+                        $OR = ' OR ';
+                    }
+                    
+                    // if taxonomies search is enabled
+                    //if (!empty($this->WP_ES_settings['taxonomies'])) {
+                    $include_search = array( 'post_tag' );
+                    if ( true ) {
+                        $tax_OR = '';
+                        
+                        foreach ($include_search as $tax) {
+                            $search .= $OR;
+                            $search .= $wpdb->prepare("$tax_OR (estt.taxonomy = '%s' AND est.name LIKE '%s')", $tax, $term);
+                            $OR = '';
+                            $tax_OR = ' OR ';
+                        }
+                        
+                        $OR = ' OR ';
+                    }
+                    
+                    // If authors search is enabled
+                    //if (!empty($this->WP_ES_settings['authors'])) {
+                    if ( false ) {
+                        $search .= $OR;
+                        $search .= $wpdb->prepare("(esusers.display_name LIKE '%s')", $term);
+                    }
+                    
+                    $search .= ")";
+                } else {
+                    // If plugin settings not available return the default query
+                    $search .= $wpdb->prepare("{$searchand} (($wpdb->posts.post_title LIKE '%s') OR ($wpdb->posts.post_content LIKE '%s') OR ($wpdb->posts.post_excerpt LIKE '%s'))", $term, $term, $term);
+                }
+
+                $searchand = " $terms_relation_type ";
+            }
+
+            if ( ! empty( $search ) ) {
+                $search = " AND ({$search}) ";
+                if ( ! is_user_logged_in() )
+                    $search .= " AND ($wpdb->posts.post_password = '') ";
+            }
+            
+            /* Join Table */
+            add_filter('posts_join_request', array($this, 'wp_es_join_table'));
+
+            /* Request distinct results */
+            add_filter('posts_distinct_request', array($this, 'WP_ES_distinct'));
+            
+            /**
+             * Filter search query return by plugin
+             * @since 1.0.1
+             * @param string $search SQL query
+             * @param object $wp_query global wp_query object
+             */
+            //return apply_filters('wpes_posts_search', $search, $wp_query); // phew :P All done, Now return everything to wp.
+            return $search;
+        }
+
+        public function wp_es_join_table($join){
+            global $wpdb;
+            
+            //join post meta table
+           /*  if (!empty($this->WP_ES_settings['meta_keys'])) {
+                $join .= " LEFT JOIN $wpdb->postmeta espm ON ($wpdb->posts.ID = espm.post_id) ";
+            } */
+            
+            //join taxonomies table
+            //if (!empty($this->WP_ES_settings['taxonomies'])) {
+            if ( true ) {
+                $join .= " LEFT JOIN $wpdb->term_relationships estr ON ($wpdb->posts.ID = estr.object_id) ";
+                $join .= " LEFT JOIN $wpdb->term_taxonomy estt ON (estr.term_taxonomy_id = estt.term_taxonomy_id) ";
+                $join .= " LEFT JOIN $wpdb->terms est ON (estt.term_id = est.term_id) ";
+            }
+            
+            // Joint the users table
+            /* if (!empty($this->WP_ES_settings['authors'])) {
+                $join .= " LEFT JOIN $wpdb->users esusers ON ($wpdb->posts.post_author = esusers.ID) ";
+            }
+             */
+            return $join;
+        }
+
+        public function WP_ES_distinct($distinct) {
+            $distinct = 'DISTINCT';
+            return $distinct;
+        }        
         
 
     }    
