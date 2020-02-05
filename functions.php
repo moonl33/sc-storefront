@@ -30,6 +30,16 @@ if ( class_exists( 'LearnDash_Theme_Register' ) && file_exists( IAVC_MODS . 'lea
     require_once IAVC_MODS . 'learndash/Iav_Elementor_Wrappers.php';
 endif;
 
+//check if RCP exists then include if true
+if ( class_exists( 'RCP_Requirements_Check' ) ) :
+    if( file_exists( IAVC_MODS . 'rcp/rcp_customs.php' ) ){
+        require_once IAVC_MODS . 'rcp/rcp_customs.php';
+    }
+    if( file_exists( IAVC_MODS . 'rcp/rcp_user_profiles.php' ) ){
+        require_once IAVC_MODS . 'rcp/rcp_user_profiles.php';
+    }
+endif;
+
 if ( file_exists( IAVC_MODS . 'shortcodes/Iav_Shortcodes.php' ) ) :
     require_once IAVC_MODS . 'shortcodes/Iav_Shortcodes.php';
 endif;
@@ -56,3 +66,24 @@ function iav_check_back_button(){
     }
 }
 add_action( 'init' , 'iav_check_back_button');
+
+if ( ! function_exists( 'my_custom_add_to_cart_redirect' ) ) :
+function my_custom_add_to_cart_redirect( $url ) {
+	
+	if ( ! isset( $_REQUEST['add-to-cart'] ) || ! is_numeric( $_REQUEST['add-to-cart'] ) ) {
+		return $url;
+	}
+	
+	$product_id = apply_filters( 'woocommerce_add_to_cart_product_id', absint( $_REQUEST['add-to-cart'] ) );
+	
+	// Only redirect the product IDs in the array to the checkout
+	if ( in_array( $product_id, array( 2851 ) ) ) {
+		//$url = WC()->cart->get_checkout_url();
+		$url = WC()->cart->get_cart_url();
+	}
+	return $url;
+
+}
+add_filter( 'woocommerce_add_to_cart_redirect', 'my_custom_add_to_cart_redirect' );
+
+endif;

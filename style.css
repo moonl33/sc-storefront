@@ -11,3 +11,11 @@ Tags: e-commerce,two-columns,left-sidebar,right-sidebar,custom-background,custom
 Version: 2.5.1.1563106802
 */
 
+
+/* Inline #48 | /members/edit-your-profile/ */
+.sc-required-field::after {
+    /* content: ""; */
+    content: "*";
+    color: #F51439;
+  }
+  
