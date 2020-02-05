@@ -87,11 +87,14 @@ rcp_show_error_messages( 'register' ); ?>
 				<?php if( rcp_show_subscription_level( $level->id ) ) :
 					$has_trial = $rcp_levels_db->has_trial( $level->id );
 				?>
+				<?php 
+				$echo_duration = ($level->duration==1)?"":$level->duration;
+				?>
 				<li class="rcp_subscription_level rcp_subscription_level_<?php echo $level->id; ?>">
 					<input type="radio" id="rcp_subscription_level_<?php echo $level->id; ?>" class="required rcp_level" <?php if ( $i == 0 || ( isset( $_GET['level'] ) && $_GET['level'] == $level->id ) ) { echo 'checked="checked"'; } ?> name="rcp_level" rel="<?php echo esc_attr( $level->price ); ?>" value="<?php echo esc_attr( absint( $level->id ) ); ?>" <?php if( $level->duration == 0 ) { echo 'data-duration="forever"'; } if ( ! empty( $has_trial ) ) { echo 'data-has-trial="true"'; } ?>/>
 					<label for="rcp_subscription_level_<?php echo $level->id; ?>">
 						<span class="rcp_subscription_level_name"><?php echo rcp_get_subscription_name( $level->id ); ?></span><span class="rcp_separator">&nbsp;-&nbsp;</span><span class="rcp_price" rel="<?php echo esc_attr( $level->price ); ?>"><?php echo $level->price > 0 ? rcp_currency_filter( $level->price ) : __( 'free', 'rcp' ); ?></span><span class="rcp_separator">&nbsp;-&nbsp;</span>
-						<span class="rcp_level_duration"><?php echo $level->duration > 0 ? $level->duration . '&nbsp;' . rcp_filter_duration_unit( $level->duration_unit, $level->duration ) : __( 'unlimited', 'rcp' ); ?></span>
+						<span class="rcp_level_duration"><?php echo $level->duration > 0 ? $echo_duration . '&nbsp;' . sc_rcp_filter_duration_unit( $level->duration_unit, $level->duration ) : __( 'unlimited', 'rcp' ); ?></span>
 						<?php if ( ! empty( $level->maximum_renewals ) ) : ?>
 							<span class="rcp_separator">&nbsp;-&nbsp;</span>
 							<span class="rcp_level_bill_times"><?php printf( __( '%d total payments', 'rcp' ), $level->maximum_renewals + 1 ); ?></span>
