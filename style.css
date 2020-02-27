@@ -22,3 +22,15 @@ Version: 2.5.1.1563106802
   #checkout-event-hotel {
     max-width: 320px;
   } 
+
+
+/* /group-account/ */
+#member-add-fields {
+  display: flex;
+}
+.member-column {
+  width: 50%;
+}
+.member-column span {
+  display: block;
+}

@@ -26,3 +26,18 @@ if ( ! function_exists( 'sc_rcp_filter_duration_unit' ) ) :
         return $new_unit;
     }
 endif;
+
+// save user_meta for user's that are invited
+if ( ! function_exists( 'sc_more_invite_fields' ) ) :
+    add_action( 'rcpga_add_member_to_group_after', 'sc_more_invite_fields', 10, 2 );
+    function sc_more_invite_fields( $user_id, $args ){
+
+        if( ! empty( $_REQUEST["rcpga-position"] ) ) {
+            update_user_meta( $user_id, 'sc_position', sanitize_text_field( $_REQUEST["rcpga-position"] ) );
+        }
+        
+        if( ! empty( $_REQUEST["rcpga-phone"] ) ) {
+            update_user_meta( $user_id, 'sc_phone_number', sanitize_text_field( $_REQUEST["rcpga-phone"] ) );
+        }
+    }
+endif;
