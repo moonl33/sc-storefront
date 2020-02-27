@@ -23,7 +23,7 @@ function iav_tc_show_event_meta($order_id, $tickets, $columns, $classes) {
                 <img src=\" $event_image \" alt=\"$event_title Image\">
             </div>
             <div class=\"hotel-book-link\">
-                <a href=\"$event_book_link\">Book Now</a>
+                <a class=\"button\" href=\"$event_book_link\" target=\"_blank\" >Book Now</a>
             </div>
             </div>
             ";
