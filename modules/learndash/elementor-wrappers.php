@@ -9,15 +9,15 @@ if ( ! defined( 'WPINC' ) ) {die;} // end if
 
 
 //simple class to add hooks
-if(  ! class_exists( 'Iav_Elementor_Wrappers') ) :
-class Iav_Elementor_Wrappers
+if(  ! class_exists( 'IAV_ELEMENTOR_WRAPPERS') ) :
+class IAV_ELEMENTOR_WRAPPERS
 {
     protected static $instance = NULL;
     
     public function __construct() {
 
         add_filter( 'learndash_template', array( $this, 'replacement_learndash_templates' ) , 90, 5);
-        // wrappers to course/lessons - maybe check if elementor is active?
+        // wrappers to course/lessons - 
         add_action( 'learndash-course-before', array( $this, 'pre_elementor_wrapper'), 10 );
         add_action( 'learndash-course-after', array( $this, 'post_elementor_wrapper'), 10 );
         add_action( 'learndash-lesson-before', array( $this, 'pre_elementor_wrapper'), 10 );
@@ -57,6 +57,6 @@ class Iav_Elementor_Wrappers
        }
 }
 
-new Iav_Elementor_Wrappers();
+new IAV_ELEMENTOR_WRAPPERS();
 
 endif;
