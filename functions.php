@@ -30,6 +30,17 @@ if ( class_exists( 'LearnDash_Theme_Register' ) && file_exists( IAVC_MODS . 'lea
     require_once IAVC_MODS . 'learndash/Iav_Elementor_Wrappers.php';
 endif;
 
+// stuff for ACF
+if ( file_exists( IAVC_MODS . 'acf/acf.php' ) ) :
+    require_once IAVC_MODS . 'acf/acf.php';
+endif;
+
+// tickera tweaks
+if ( class_exists( 'TC' ) ) :
+    if( file_exists( IAVC_MODS . 'tickera/tickera.php' ) ){
+        require_once IAVC_MODS . 'tickera/tickera.php' ;
+    }
+endif;
 //check if RCP exists then include if true
 if ( class_exists( 'RCP_Requirements_Check' ) ) :
     if( file_exists( IAVC_MODS . 'rcp/rcp_customs.php' ) ){
@@ -87,3 +98,6 @@ function my_custom_add_to_cart_redirect( $url ) {
 add_filter( 'woocommerce_add_to_cart_redirect', 'my_custom_add_to_cart_redirect' );
 
 endif;
+
+// remove order again button
+remove_action( 'woocommerce_order_details_after_order_table', 'woocommerce_order_again_button' );
