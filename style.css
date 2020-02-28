@@ -34,3 +34,35 @@ Version: 2.5.1.1563106802
 .member-column span {
   display: block;
 }
+
+#early-bird-discounts {
+  display: flex;
+  justify-content: center;
+}
+
+#early-bird-discounts .product.woocommerce.add_to_cart_inline {
+  background-color: #00439b;
+  margin: 0 20px 20px;
+  color: #FFFFFF;
+  position: relative;
+  padding: 20px;
+}
+#early-bird-discounts .product.woocommerce.add_to_cart_inline > * {
+  display: block;
+  text-align: center;
+}
+
+#early-bird-discounts .product.woocommerce.add_to_cart_inline .button {
+  margin-top: 20px;
+}
+
+.woocommerce-checkout .owner-info-wrap {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.woocommerce-checkout .owner-info-wrap .fields-wrap {
+  margin: 0 20px;
+  width: auto;
+  float: none;
+}
