@@ -65,6 +65,27 @@ if( function_exists('acf_add_local_field_group') ):
                 'append' => '',
                 'maxlength' => '',
             ),
+            array(
+                'key' => 'field_5e5893c932f48',
+                'label' => 'Elementor Template ID',
+                'name' => 'elementor_template_id',
+                'type' => 'number',
+                'instructions' => 'Create an elementor template, this template will be displayed on "order received" page if an event ticket is purchased',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'default_value' => '',
+                'placeholder' => '',
+                'prepend' => '',
+                'append' => '',
+                'min' => '',
+                'max' => '',
+                'step' => '',
+            ),
         ),
         'location' => array(
             array(
