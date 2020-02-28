@@ -100,4 +100,4 @@ add_filter( 'woocommerce_add_to_cart_redirect', 'my_custom_add_to_cart_redirect'
 endif;
 
 // remove order again button
-//remove_action( 'woocommerce_order_details_after_order_table', 'woocommerce_order_again_button' );
+remove_action( 'woocommerce_order_details_after_order_table', 'woocommerce_order_again_button' );

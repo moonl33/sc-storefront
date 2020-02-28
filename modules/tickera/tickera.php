@@ -9,7 +9,7 @@ function iav_tc_show_event_meta($order_id, $tickets, $columns, $classes) {
         $event_id = $ticket_type->get_ticket_event( apply_filters( 'tc_ticket_type_id' , $ticket_type_id ) );
         // check if event is in array, if not add it and display details, if it exists(displayed) then do nothing
         if (  ! empty( $event_id ) && ! in_array( $event_id , $events_array ) ) :
-            $eventsarray[] = $event_id;
+            $events_array[] = $event_id;
             $event = new TC_Event( $event_id );
             // check for attachment image, if not do nothing
 
