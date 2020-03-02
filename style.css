@@ -45,7 +45,11 @@ Version: 2.5.1.1563106802
   margin: 0 20px 20px;
   color: #FFFFFF;
   position: relative;
-  padding: 20px;
+  border-radius: 8px 8px 0px 0px;
+  color: #9ce8fe;
+  min-width: 200px;
+  margin-bottom: 45px;
+  padding: 20px 0;
 }
 #early-bird-discounts .product.woocommerce.add_to_cart_inline > * {
   display: block;
@@ -53,16 +57,56 @@ Version: 2.5.1.1563106802
 }
 
 #early-bird-discounts .product.woocommerce.add_to_cart_inline .button {
-  margin-top: 20px;
+  position: absolute;
+  bottom: -45px;
+  left: 0;
+  right: 0;
+  border-radius: 0px 0px 8px 8px;
+}
+#early-bird-discounts .product.woocommerce.add_to_cart_inline .button:hover {
+  background-color: #2bccff;
+  -webkit-transition: all .3s;
+  -o-transition: all .3s;
+  transition: all .3s;
 }
 
-.woocommerce-checkout .owner-info-wrap {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
+#early-bird-discounts .product.woocommerce.add_to_cart_inline .woocommerce-Price-amount.amount {
+  margin-right: 0;
 }
-.woocommerce-checkout .owner-info-wrap .fields-wrap {
-  margin: 0 20px;
-  width: auto;
+
+.woocommerce-checkout .tc-form-ticket-fields-wrap h5 {
+  font-family: "Varela Round", Sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.woocommerce-checkout .tickera_additional_info .owner-info-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.woocommerce-checkout .tickera_additional_info .owner-info-wrap p {
+  display: none;
+  visibility: hidden;
+}
+
+.woocommerce-checkout .tickera_additional_info .owner-info-wrap .fields-wrap {
   float: none;
+}
+
+@media only screen and (min-width:1001px) {
+  .woocommerce-checkout .tickera_additional_info .owner-info-wrap .fields-wrap { width: 25%; }
+}
+
+@media only screen and (max-width:1000px) and (min-width:768px) {
+  .woocommerce-checkout .tickera_additional_info .owner-info-wrap .fields-wrap { width: 33.33%; }
+}
+
+@media only screen and (max-width:767px) {
+  .woocommerce-checkout .tickera_additional_info .owner-info-wrap .fields-wrap { width: 50%; }
+}
+
+@media only screen and (max-width:530px) {
+  .woocommerce-checkout .tickera_additional_info .owner-info-wrap .fields-wrap { width: 100%; }
 }
