@@ -41,3 +41,12 @@ if ( ! function_exists( 'sc_more_invite_fields' ) ) :
         }
     }
 endif;
+
+//add custom email templates
+function ag_rcp_email_templates( $templates ) {
+    $templates['sc-custom-template'] = __( 'SC Custom Template' );
+
+    return $templates;
+}
+
+add_filter( 'rcp_email_templates', 'ag_rcp_email_templates' );
