@@ -110,3 +110,118 @@ Version: 2.5.1.1563106802
 @media only screen and (max-width:530px) {
   .woocommerce-checkout .tickera_additional_info .owner-info-wrap .fields-wrap { width: 100%; }
 }
+
+
+/* Research Library - Sidebar Search Filter */
+#sidebar-filter {
+  font-family: "Varela Round", Sans-serif;
+}
+#sidebar-filter .sidebar-filter-widget {
+  margin-bottom: 20px;
+}
+#sidebar-filter .sidebar-filter-widget h4 {
+  color: #111111;
+  background-color: #e8e8e8;
+  font-size: 12px;
+  text-transform: uppercase;
+  line-height: 39px;
+  padding: 0 20px;
+}
+#sidebar-filter .sidebar-filter-widget fieldset {
+  background-color: transparent;
+  padding: 0;
+  margin: 10px;
+  margin-left: 0;
+}
+#sidebar-filter .sidebar-filter-widget fieldset label span {
+  color: #606060;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+}
+#sidebar-filter .sidebar-filter-widget fieldset input[type='checkbox'] {
+  padding: 3px;
+  border-color: #595959;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/* Base for label styling */
+#sidebar-filter .sidebar-filter-widget fieldset [type="checkbox"]:not(:checked),
+#sidebar-filter .sidebar-filter-widget fieldset [type="checkbox"]:checked {
+  position: absolute;
+  left: -9999px;
+}
+#sidebar-filter .sidebar-filter-widget fieldset [type="checkbox"]:not(:checked) + label,
+#sidebar-filter .sidebar-filter-widget fieldset [type="checkbox"]:checked + label {
+  position: relative;
+  padding-left: 1.95em;
+  cursor: pointer;
+}
+/* checkbox aspect */
+#sidebar-filter .sidebar-filter-widget fieldset [type="checkbox"]:not(:checked) + label:before,
+#sidebar-filter .sidebar-filter-widget fieldset [type="checkbox"]:checked + label:before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0;
+  width: 1.25em; height: 1.25em;
+  border: 1px solid #595959;
+  background: #fff;
+}
+/* checked mark aspect */
+#sidebar-filter .sidebar-filter-widget fieldset [type="checkbox"]:not(:checked) + label:after,
+#sidebar-filter .sidebar-filter-widget fieldset [type="checkbox"]:checked + label:after {
+  content: '\2713\0020';
+  position: absolute;
+  top: .15em; left: .22em;
+  font-size: 1.3em;
+  line-height: 0.8;
+  color: #005ab9;
+  transition: all .2s;
+  font-family: 'Lucida Sans Unicode', 'Arial Unicode MS', Arial;
+}
+
+/* checked mark aspect changes */
+#sidebar-filter .sidebar-filter-widget fieldset [type="checkbox"]:not(:checked) + label:after {
+  opacity: 0;
+  transform: scale(0);
+}
+#sidebar-filter .sidebar-filter-widget fieldset [type="checkbox"]:checked + label:after {
+  opacity: 1;
+  transform: scale(1);
+}
+/* disabled checkbox */
+#sidebar-filter .sidebar-filter-widget fieldset [type="checkbox"]:disabled:not(:checked) + label:before,
+#sidebar-filter .sidebar-filter-widget fieldset [type="checkbox"]:disabled:checked + label:before {
+  box-shadow: none;
+  border-color: #bbb;
+  background-color: #ddd;
+}
+#sidebar-filter .sidebar-filter-widget fieldset [type="checkbox"]:disabled:checked + label:after {
+  color: #999;
+}
+#sidebar-filter .sidebar-filter-widget fieldset [type="checkbox"]:disabled + label {
+  color: #aaa;
+}
+
+#display-toggle {
+  display: flex;
+  justify-content: flex-end;
+}
+#display-toggle .elementor-icon {
+  font-size: 20px;
+  display: block;
+}
+#display-toggle a {
+  padding: 0 10px;
+  border-right: 1px #c0c0c0 solid;
+}
+#display-toggle a.last {
+  padding-right: 0;
+  border-right: 0;
+}
+#display-toggle a .elementor-icon {
+  color: #a2a2a2;
+}
+#display-toggle a.active .elementor-icon {
+  color: #005ab9;
+}
