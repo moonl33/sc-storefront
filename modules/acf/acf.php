@@ -7,6 +7,25 @@ if( function_exists('acf_add_local_field_group') ):
         'title' => 'Recommended Hotel',
         'fields' => array(
             array(
+                'key' => 'field_5e5d30950e6a6',
+                'label' => 'Hotel Name',
+                'name' => 'hotel_name',
+                'type' => 'text',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'default_value' => '',
+                'placeholder' => '',
+                'prepend' => '',
+                'append' => '',
+                'maxlength' => '',
+            ),
+            array(
                 'key' => 'field_5e57356df49b0',
                 'label' => 'Hotel Featured Image',
                 'name' => 'hotel_featured_image',
