@@ -96,6 +96,9 @@ if ( ! class_exists( 'Iav_Shortcodes' ) ) :
             
             $initial_keyword = ( $_REQUEST["keyword"] ) ? sanitize_text_field( $_REQUEST["keyword"] ) : "";
             $initial_page = ( $_REQUEST["paged"] && is_numeric( $_REQUEST["paged"] ) ) ? $_REQUEST["paged"] : get_query_var('paged');
+            $initial_cat = ( $_REQUEST["categ"] ) ? sanitize_text_field( $_REQUEST["categ"] ) : "";
+            $initial_tag = ( $_REQUEST["tagged"] ) ? sanitize_text_field( $_REQUEST["tagged"] ) : "";
+            $initial_layout = ( $_REQUEST["layout"] ) ? sanitize_text_field( $_REQUEST["layout"] ) : "";
             //output
             $nonce = wp_create_nonce( 'search_' . get_the_ID() );
             ob_start();
@@ -129,6 +132,9 @@ if ( ! class_exists( 'Iav_Shortcodes' ) ) :
                     </fieldset>
                 </div>
                 <input type="hidden" value="<?php echo $initial_page ?>" name="paged">
+                <input type="hidden" value="<?php echo $initial_cat ?>" name="categ">
+                <input type="hidden" value="<?php echo $initial_tag ?>" name="tagged">
+                <input type="hidden" value="<?php echo $initial_layout ?>" name="layout">
             </form>
             </div>            
             <?php
@@ -154,7 +160,14 @@ if ( ! class_exists( 'Iav_Shortcodes' ) ) :
                 'order' => 'DESC',
                 'orderby' => 'date',
             );
-            $category = ""; //empty string for category
+            $category = ( isset( $_POST['categ'] ) && "" !== $_POST['categ'] ) ? sanitize_text_field( $_POST['categ'] ) : ""; //empty string for category
+            $tag = ( isset( $_POST['tagged'] ) && "" !== $_POST['tagged'] ) ? sanitize_text_field( $_POST['tagged'] ) : ""; //empty string for category
+            $is_grid = true; //( isset( $_POST['layout'] ) && "grid" == $_POST['layout'] ) ? true : false; //empty string for category
+            if( isset( $_POST['layout'] ) && $_POST['layout'] != "" ) {
+                if( $_POST['layout'] == "list" ){
+                    $is_grid = false;
+                }
+            }
             if ( isset( $_POST['keyword'] ) && "" !== $_POST['keyword'] ) :
                 $args['s'] = sanitize_text_field( $_POST['keyword'] );
                 /* $args['tax_query'] = array(
@@ -188,7 +201,10 @@ if ( ! class_exists( 'Iav_Shortcodes' ) ) :
                 $category = ($category == "" ) ? $_POST['force_cat'] : $_POST['force_cat'] . "+" . $category;
             endif;
             if ( "" != $category ) :
-                     $args["category_name"] = sanitize_text_field($category);
+                $args["category_name"] = sanitize_text_field($category);
+            endif;
+            if ( "" != $tag ) :
+                $args["tag"] = sanitize_text_field($tag);
             endif;
             // The Query
             //$query = new WP_Query( $args ); // use query_posts because WP_Query will ignore pagination
@@ -204,10 +220,10 @@ if ( ! class_exists( 'Iav_Shortcodes' ) ) :
                     the_post();
                     ob_start();
                     ?>
-                    <li class="iav-result-row grid-item">
+                    <li class="iav-result-row <?php if( $is_grid ){ echo "grid-item"; }?>">
                         <!-- <article> -->
                             <?php
-                            if (  get_the_post_thumbnail_url( get_the_ID() , 'full' ) ) {
+                            if (  get_the_post_thumbnail_url( get_the_ID() , 'full' ) && $is_grid ) {
                             ?>
                             <div>
                                 <a href="<?php echo get_the_permalink(); ?>" rel="nofollow" >
@@ -215,7 +231,7 @@ if ( ! class_exists( 'Iav_Shortcodes' ) ) :
                                 </a>
                             </div>
                             <?php
-                            } else {
+                            } elseif( $is_grid ) {
                             ?>
                             <div>
                                 <a href="<?php echo get_the_permalink(); ?>" rel="nofollow" >

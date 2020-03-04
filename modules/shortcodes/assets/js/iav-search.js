@@ -44,6 +44,7 @@
     // submit search on change and make checkbox behave like radio
     $( 'body' ).on( 'change', '.iav-search-category input[type="checkbox"]', function( event ) {
         event.preventDefault();
+        return;
         var initial_state = $(this).prop('checked');
         $('.iav-search-category input[type="checkbox"]').each(function(){
             $(this).prop('checked', false);
@@ -65,5 +66,59 @@
         $('input[name="paged"]').val( $(this).text() );
         $( 'form.iav-search-form' ).trigger( 'submit' ); 
     });
+    // make this work like a radio button category filter
+    $( 'body' ).on( 'change', 'input[name="tag[]"]', function( event ) {
+        event.preventDefault();
+        var initial_state = $(this).prop('checked');
+        $('input[name="tag[]"]').each(function(){
+            $(this).prop('checked', false);
+        });
+        if( initial_state ){
+            $(this).prop('checked', true);
+        } 
+        if( $(this).prop('checked') ) {
+            $( 'input[name="categ"]' ).val( $(this).val() );
+        }else{
+            $( 'input[name="categ"]' ).val("");
+        }
+        $( 'form.iav-search-form' ).trigger( 'submit' ); 
+    });
+
+    // make this work like a radio button category filter
+    $( 'body' ).on( 'change', 'input[name="category[]"]', function( event ) {
+        event.preventDefault();
+        var initial_state = $(this).prop('checked');
+        $('input[name="category[]"]').each(function(){
+            $(this).prop('checked', false);
+        });
+        if( initial_state ){
+            $(this).prop('checked', true);
+        }
+        //set value on results
+        if( $(this).prop('checked') ) {
+            $( 'input[name="tagged"]' ).val( $(this).val() );
+        }else{
+            $( 'input[name="tagged"]' ).val("");
+        }
+        
+        $( 'form.iav-search-form' ).trigger( 'submit' ); 
+    });
+
+    // layout actions
+    $( 'body' ).on( 'click', '#layout-list', function( event ) {
+        event.preventDefault();
+        $(this).addClass("active");
+        $("#layout-grid").removeClass("active");
+        $( 'input[name="layout"]' ).val("list");
+        $( 'form.iav-search-form' ).trigger( 'submit' ); 
+    });
+    $( 'body' ).on( 'click', '#layout-grid', function( event ) {
+        event.preventDefault();
+        $(this).addClass("active");
+        $("#layout-list").removeClass("active");
+        $( 'input[name="layout"]' ).val("grid");
+        $( 'form.iav-search-form' ).trigger( 'submit' ); 
+    });
+
 
 })( jQuery );
