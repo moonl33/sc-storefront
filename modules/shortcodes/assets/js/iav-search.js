@@ -21,6 +21,18 @@
         form_data.append( 'nonce' , $( this ).data( 'nonce' ) );
         form_data.append( 'searchid' , $( this ).data( 'searchid' ) );
         form_data.append( 'formid' , $( this ).attr( 'id' ) );
+        
+        //category=podcast&keyword=&paged=0&categ=&tagged=&layout=
+        //if(form)
+        if( form_data.get('keyword') != "" ||    form_data.get('categ') != "" ||  form_data.get('tagged') != "" ){
+            $('#subscribe , #research-tracks').hide();
+        }else{
+            if(!form_data.get('category')){
+                $('#subscribe , #research-tracks').show();
+            }else{
+                $('#subscribe , #research-tracks').hide();
+            }
+        }
         $.ajax({
             url: eval(local_script_name).ajaxurl, 
             data: form_data,
@@ -43,7 +55,6 @@
     });
     // submit search on change and make checkbox behave like radio
     $( 'body' ).on( 'change', '.iav-search-category input[type="checkbox"]', function( event ) {
-        return;
         event.preventDefault();
         
         var initial_state = $(this).prop('checked');
@@ -54,7 +65,7 @@
             $(this).prop('checked', true);
         }
         $( 'input[name="paged"]' ).val( "1" );
-        //$( 'form.iav-search-form' ).trigger( 'submit' ); 
+        $( 'form.iav-search-form' ).trigger( 'submit' ); 
     });
     //for navigation 
     $( 'body' ).on( 'click', '.nav-results-button', function( event ) {
