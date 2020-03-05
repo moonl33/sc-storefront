@@ -43,8 +43,9 @@
     });
     // submit search on change and make checkbox behave like radio
     $( 'body' ).on( 'change', '.iav-search-category input[type="checkbox"]', function( event ) {
-        event.preventDefault();
         return;
+        event.preventDefault();
+        
         var initial_state = $(this).prop('checked');
         $('.iav-search-category input[type="checkbox"]').each(function(){
             $(this).prop('checked', false);
@@ -53,7 +54,7 @@
             $(this).prop('checked', true);
         }
         $( 'input[name="paged"]' ).val( "1" );
-        $( 'form.iav-search-form' ).trigger( 'submit' ); 
+        //$( 'form.iav-search-form' ).trigger( 'submit' ); 
     });
     //for navigation 
     $( 'body' ).on( 'click', '.nav-results-button', function( event ) {
@@ -81,6 +82,7 @@
         }else{
             $( 'input[name="categ"]' ).val("");
         }
+        $( 'input[name="paged"]' ).val( "1" );
         $( 'form.iav-search-form' ).trigger( 'submit' ); 
     });
 
@@ -100,7 +102,7 @@
         }else{
             $( 'input[name="tagged"]' ).val("");
         }
-        
+        $( 'input[name="paged"]' ).val( "1" );
         $( 'form.iav-search-form' ).trigger( 'submit' ); 
     });
 

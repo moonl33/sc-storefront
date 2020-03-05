@@ -229,3 +229,9 @@ Version: 2.5.1.1563106802
 .iav-result-row {
   width: 100%;
 }
+@media (min-width: 1000px) {
+  .grid-sizer,
+  .iav-result-row.grid-item {
+    width: 30%;
+  }
+}
