@@ -235,3 +235,11 @@ Version: 2.5.1.1563106802
     width: 30%;
   }
 }
+
+
+.iav-search-category .cat-webcast::before {
+  content: "\f044";
+}
+.iav-search-category .cat-webcast::after {
+  content: "Blog";
+}

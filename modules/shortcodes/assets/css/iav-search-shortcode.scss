@@ -119,6 +119,12 @@ label[for="keyword"] {
     .cat-webcast::after {
         content: "Webinars";
     }
+    .cat-blog::before {
+        content: "\f044";
+    }
+    .cat-blog::after {
+        content: "Blog";
+    }
     //hide actual label and just show icon
     label span{
         display: none;
