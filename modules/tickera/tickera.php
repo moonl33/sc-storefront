@@ -42,3 +42,15 @@ function iav_tc_show_event_meta($order_id, $tickets, $columns, $classes) {
     echo '</div>'; //end checkout-event-hotel wrapper
 }
 add_action( 'tc_order_details_table_front_after_table' , 'iav_tc_show_event_meta', 4, 10 );
+
+
+// replace Tickets word with Reservation from orders table
+add_filter( 'tc_order_details_table_front_show_tickets_header' , 'remove_tc_order_header' );
+function remove_tc_order_header() {
+    return false;
+}
+// add word Reservation on orders summary
+add_action( 'tc_order_details_table_front_before_table' , 'tc_print_reservation_header' );
+function tc_print_reservation_header() {
+    echo '<h2>' . __('Reservation') . '</h2>';
+}
