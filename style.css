@@ -237,9 +237,9 @@ Version: 2.5.1.1563106802
 }
 
 
-.iav-search-category .cat-webcast::before {
+.iav-search-category .cat-blog::before {
   content: "\f044";
 }
-.iav-search-category .cat-webcast::after {
+.iav-search-category .cat-blog::after {
   content: "Blog";
 }
