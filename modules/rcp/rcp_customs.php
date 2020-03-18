@@ -50,3 +50,20 @@ function ag_rcp_email_templates( $templates ) {
 }
 
 add_filter( 'rcp_email_templates', 'ag_rcp_email_templates' );
+
+/**
+ * When user pays 0 or Free on a membership, expiration date is set to manual
+ * 
+ * @param RCP_Member $member 
+ * @param RCP_Customer $customer
+ * @param RCP_Membership $membership
+ * 
+ * @return void
+ */
+function ag_rcp_after_registration( $member, $customer, $membership ) {
+
+	// manually set expiration to 1 year after current date. temp fix. replace this after task deadline
+    $membership->set_expiration_date( date( 'Y-m-d H:i:s', strtotime( '365 day', current_time( 'timestamp' ) ) ) );
+}
+
+add_action( 'rcp_successful_registration', 'ag_rcp_after_registration', 10, 3 );
