@@ -63,9 +63,9 @@ endif;
 // dirty trick to disable rewrite if on search shortcode
 // https://wordpress.stackexchange.com/questions/66273/disable-wordpress-pagination-url-rewrite-for-specific-page
 function wpa66273_disable_canonical_redirect( $query ) {
-if( $_REQUEST["paged"] && $_REQUEST["keyword"] )
-        remove_filter( 'template_redirect', 'redirect_canonical' ); 
-}
+    if( $_REQUEST["paged"] && $_REQUEST["keyword"] )
+            remove_filter( 'template_redirect', 'redirect_canonical' ); 
+    }
 add_action( 'parse_query', 'wpa66273_disable_canonical_redirect' );
 function iav_check_back_button(){
     if( isset($_SERVER['HTTP_REFERER']) ) {

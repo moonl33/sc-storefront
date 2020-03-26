@@ -146,6 +146,12 @@ function pw_rcp_save_user_fields_on_profile_save( $user_id ) {
 		update_user_meta( $user_id, 'sc_phone_number', sanitize_text_field( $_POST['sc_phone_number'] ) );
 	}
 
+	if( ! empty( $_POST['rcp_new_user_pass1'] ) && ( $_POST['rcp_new_user_pass1'] == $_POST['rcp_new_user_pass2'] ) ) {
+		$_POST["rcp_redirect"] .= '?pwdedit=success';
+	}
+
 }
 add_action( 'rcp_user_profile_updated', 'pw_rcp_save_user_fields_on_profile_save', 10 );
 add_action( 'rcp_edit_member', 'pw_rcp_save_user_fields_on_profile_save', 10 );
+
+// add password updated message on query args if password is changed

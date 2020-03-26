@@ -1,5 +1,5 @@
 <?php
-// do_action('tc_order_details_table_front_after_table', $order_id, $tickets, $columns, $classes);
+
 function iav_tc_show_event_meta($order_id, $tickets, $columns, $classes) {
     echo '<div id="checkout-event-hotel">'; //start checkout-event-hotel wrapper
     $events_array = [];
