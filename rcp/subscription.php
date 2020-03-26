@@ -111,7 +111,7 @@ if ( ! empty( $memberships ) ) {
 
 						if ( $membership->can_renew() ||  $membership->upgrade_possible()  ) {
 							//$links[] = apply_filters( 'rcp_subscription_details_action_renew', '<a href="' . esc_url( rcp_get_membership_renewal_url( $membership->get_id() ) ) . '" title="' . esc_attr__( 'Renew your membership', 'rcp' ) . '" class="rcp_sub_details_renew">' . __( 'Renew your membership', 'rcp' ) . '</a>', $user_ID );
-							$links[] = apply_filters( 'rcp_subscription_details_action_renew', '<a href="/members/" title="' . esc_attr__( 'Changed or renew your membership', 'rcp' ) . '" class="rcp_sub_details_renew">' . __( 'Changed or renew your membership', 'rcp' ) . '</a>', $user_ID );
+							$links[] = apply_filters( 'rcp_subscription_details_action_renew', '<a href="/members/" title="' . esc_attr__( 'Change or renew your membership', 'rcp' ) . '" class="rcp_sub_details_renew">' . __( 'Change or renew your membership', 'rcp' ) . '</a>', $user_ID );
 						}
 
 						/* if ( $membership->upgrade_possible() ) {
