@@ -153,5 +153,3 @@ function pw_rcp_save_user_fields_on_profile_save( $user_id ) {
 }
 add_action( 'rcp_user_profile_updated', 'pw_rcp_save_user_fields_on_profile_save', 10 );
 add_action( 'rcp_edit_member', 'pw_rcp_save_user_fields_on_profile_save', 10 );
-
-// add password updated message on query args if password is changed
