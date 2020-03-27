@@ -63,9 +63,9 @@ endif;
 // dirty trick to disable rewrite if on search shortcode
 // https://wordpress.stackexchange.com/questions/66273/disable-wordpress-pagination-url-rewrite-for-specific-page
 function wpa66273_disable_canonical_redirect( $query ) {
-    if( $_REQUEST["paged"] && $_REQUEST["keyword"] )
-            remove_filter( 'template_redirect', 'redirect_canonical' ); 
-    }
+if( $_REQUEST["paged"] && $_REQUEST["keyword"] )
+        remove_filter( 'template_redirect', 'redirect_canonical' ); 
+}
 add_action( 'parse_query', 'wpa66273_disable_canonical_redirect' );
 function iav_check_back_button(){
     if( isset($_SERVER['HTTP_REFERER']) ) {
@@ -122,104 +122,11 @@ function logout_without_confirm($action, $result)
 if ( file_exists( get_stylesheet_directory().'/modules/tickera/tickera-hubspot.php' ) ) {
     require ( get_stylesheet_directory().'/modules/tickera/tickera-hubspot.php');
 }
+
 // connection from woocommerce and tickera to hubspot
-/*if ( file_exists( get_stylesheet_directory().'/modules/rcp/rcp-hubspot.php' ) ) {
+if ( file_exists( get_stylesheet_directory().'/modules/rcp/rcp-hubspot.php' ) ) {
     require ( get_stylesheet_directory().'/modules/rcp/rcp-hubspot.php');
-}*/
-
-
-function hubspot_add_contact_rcp ($user_id) {
-    if (is_page('edit-your-profile')) {
-        //echo "<script>console.log('here');</script>";
-        $referer = explode("/",$_SERVER['HTTP_REFERER']);
-        
-        $referer = $referer[count($referer)-2];
-        
-        if($referer=="members") {
-        
-            //GET USER DETAILS
-            $userid = get_current_user_id();
-
-            //GET THE ORDER DETAILS
-
-            // Bail if they don't have one of these level IDs.
-            $customer = rcp_get_customer_by_user_id( $userid );
-            $memberships = $customer->get_memberships();
-
-            foreach ($memberships as $membership) {
-               $memtype = $membership->get_object_id();
-            }
-
-
-            switch ($memtype) {
-                    case "1": $sc_mem = "Individual"; break;
-                    case "2": $sc_mem = "Corporate"; break;
-                    case "3": $sc_mem = "Enterprise"; break;
-
-            }
-
-
-
-            $iavtc_buyer_data = array(
-                'firstname' => get_user_meta($userid,'first_name',true),
-                'lastname' => get_user_meta($userid,'last_name',true),
-                'email' => get_userdata($userid)->user_email,
-                'company' => get_user_meta($userid,'sc_company',true),
-                'position' => get_user_meta($userid,'sc_position',true),
-                'phone' => get_user_meta($userid,'sc_phone_number',true)
-            );
-
-
-            //CONNECT TO HUBSPOT AND SEND THE CUSTOMER DETAILS
-            $arr = array(
-                'properties' => array(
-                    array(
-                        'property' => 'firstname',
-                        'value' => $iavtc_buyer_data['firstname']
-                    ),
-                    array(
-                        'property' => 'lastname',
-                        'value' => $iavtc_buyer_data['lastname']
-                    ),
-                    array(
-                        'property' => 'company',
-                        'value' => $iavtc_buyer_data['company']
-                    ),
-                    array(
-                        'property' => 'jobtitle',
-                        'value' => $iavtc_buyer_data['position']
-                    ),
-                    array(
-                        'property' => 'email',
-                        'value' => $iavtc_buyer_data['email']
-                    ),
-                    array(
-                        'property' => 'phone',
-                        'value' => $iavtc_buyer_data['phone']
-                    ),
-                    array(
-                        'property' => 'serviceconnect_membership',
-                        'value' => $sc_mem
-                    )
-                )
-            );
-
-            $post_json = json_encode($arr);
-            $hapikey = "c23a7346-4766-4e1b-abe5-7aa8b4de60a5";
-            $endpoint = 'https://api.hubapi.com/contacts/v1/contact?hapikey=' . $hapikey;
-            $ch = @curl_init();
-            @curl_setopt($ch, CURLOPT_POST, true);
-            @curl_setopt($ch, CURLOPT_POSTFIELDS, $post_json);
-            @curl_setopt($ch, CURLOPT_URL, $endpoint);
-            @curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-            @curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            $response = @curl_exec($ch);
-            $status_code = @curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            $curl_errors = curl_error($ch);
-            @curl_close($ch);
-        }
-    }
-
 }
+ 
 
-add_action("wp_head","hubspot_add_contact_rcp");
+
