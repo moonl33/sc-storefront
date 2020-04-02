@@ -28,7 +28,7 @@ if ( is_user_logged_in() ):
 	<form id="rcp_profile_editor_form" class="rcp_form" action="<?php echo rcp_get_current_url(); ?>" method="post">
 		<fieldset>
 			<?php do_action( 'rcp_profile_editor_before', $current_user->ID ); ?>
-			<legend><?php _e( 'Change your Name', 'rcp' ); ?></legend>
+			<legend><?php _e( 'Change your Information', 'rcp' ); ?></legend>
 			<p id="rcp_profile_first_name_wrap">
 				<label class="sc-required-field" for="rcp_first_name"><?php _e( 'First Name', 'rcp' ); ?></label>
 				<input name="rcp_first_name" id="rcp_first_name" class="text rcp-input" type="text" value="<?php echo esc_attr( $first_name ); ?>" required/>
