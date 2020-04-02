@@ -71,7 +71,7 @@ function hubspot_add_contact_wc ($order_id) {
 
                 $post_json = json_encode($arr);
                 $hapikey = "c23a7346-4766-4e1b-abe5-7aa8b4de60a5";
-                $endpoint = 'https://api.hubapi.com/contacts/v1/contact?hapikey=' . $hapikey;
+                $endpoint = 'https://api.hubapi.com/contacts/v1/contact/createOrUpdate/email/'.$iavtc_buyer_data['email'].'/?hapikey=' . $hapikey;
                 $ch = @curl_init();
                 @curl_setopt($ch, CURLOPT_POST, true);
                 @curl_setopt($ch, CURLOPT_POSTFIELDS, $post_json);

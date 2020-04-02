@@ -104,9 +104,9 @@ function hubspot_add_contact_rcp () {
             $status_code = @curl_getinfo($ch, CURLINFO_HTTP_CODE);
             $curl_errors = curl_error($ch);
             @curl_close($ch);
-            echo "curl Errors: " . $curl_errors;
-            echo "\nStatus code: " . $status_code;
-            echo "\nResponse: " . $response;
+            //echo "curl Errors: " . $curl_errors;
+            //echo "\nStatus code: " . $status_code;
+            //echo "\nResponse: " . $response;
             //echo "<script>console.log('triggered');</script>";   
         }
     }
